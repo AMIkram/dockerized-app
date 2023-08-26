@@ -19,38 +19,44 @@ public class UserController {
 
 
     @DeleteMapping("{id}")
-        public void deleteCar(@PathVariable long id) {
+    public void deleteCar(@PathVariable long id) {
 
         User deleteUser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("user not exist"+id));
         userRepository.delete(deleteUser);}
-@GetMapping
+    @GetMapping
     public List<User> getAllusers() {
 
         return (List<User>) userRepository.findAll();
 
     }
-//add
-@PostMapping
-public void addUser(@RequestBody User user)
+    @GetMapping
+    public void getOneUser() {
+
+        System.out.println("user");
+
+    }
+    //add
+    @PostMapping
+    public void addUser(@RequestBody User user)
     { userRepository.save(user);}
 
     //build get employee by id
-@GetMapping("{id}")
-   public ResponseEntity<User>getUser(@PathVariable Long id){
-    User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("user not exist"+id));
-    return ResponseEntity.ok(user);
-   }
-   //update
-@PutMapping("{id}")
-   public ResponseEntity<User> updateEUser(@PathVariable  long id,@RequestBody  User info){
-    User updateUser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("user not exist"+id));
-    updateUser.setFull_name(info.getFull_name());
-       updateUser.setEmail(info.getEmail());
-       updateUser.setPassword(info.getPassword());
-       userRepository.save(updateUser);
-       return ResponseEntity.ok(updateUser);
+    @GetMapping("{id}")
+    public ResponseEntity<User>getUser(@PathVariable Long id){
+        User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("user not exist"+id));
+        return ResponseEntity.ok(user);
+    }
+    //update
+    @PutMapping("{id}")
+    public ResponseEntity<User> updateEUser(@PathVariable  long id,@RequestBody  User info){
+        User updateUser = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("user not exist"+id));
+        updateUser.setFull_name(info.getFull_name());
+        updateUser.setEmail(info.getEmail());
+        updateUser.setPassword(info.getPassword());
+        userRepository.save(updateUser);
+        return ResponseEntity.ok(updateUser);
 
-}
+    }
 
 
 
